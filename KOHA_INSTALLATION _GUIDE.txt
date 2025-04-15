@@ -1,0 +1,59 @@
+sudo apt-get update
+# Updates the package list to ensure you get the latest version of packages and dependencies.
+
+sudo apt-get install koha-common
+# Installs the Koha common files and configuration templates.
+
+nano /etc/koha/koha-sites.conf
+# Opens the Koha sites configuration file to edit domain settings like "INTRAPORT" and "OPACPORT".
+
+apt-get install mysql-server -y
+# Installs the MySQL server to manage Koha's database system.
+
+mysql_secure_installation
+# Secures the MySQL installation (sets root password, removes test DB, disables remote root login, etc.).
+
+nano /etc/koha/koha-sites.conf
+# Edits the configuration again if needed, usually to double-check or change something.
+
+a2enmod rewrite
+# Enables the Apache "rewrite" module, needed for URL rewriting in Koha.
+
+a2enmod cgi
+# Enables CGI support in Apache, required for Koha's Perl-based web interface.
+
+systemctl restart apache2
+# Restarts the Apache web server to apply the changes.
+
+sudo koha-create --create-db library
+# Creates a new Koha instance named "library" along with its database.
+
+sudo nano /etc/apache2/ports.conf
+# Edits Apache ports configuration, often to allow Koha to run on non-default ports.
+
+systemctl restart apache2
+# Restarts Apache to apply port configuration changes.
+
+sudo nano /etc/apache2/ports.conf
+# (Repeated) Editing again if further port changes are needed.
+
+systemctl restart apache2
+# (Repeated) Restarting again to reflect updated settings.
+
+sudo a2dissite 000-default
+# Disables the default Apache site to avoid conflicts with the Koha site.
+
+sudo a2enmod deflate
+# Enables the "deflate" module to compress web traffic for faster load times.
+
+sudo a2ensite library
+# Enables the new Koha site (the one named "library").
+
+systemctl restart apache2
+# Restarts Apache to load the new Koha site configuration.
+
+ip a
+# Shows network interfaces and IP address — used to access Koha via the browser.
+
+vi /etc/koha/sites/library/koha-conf.xml
+# Opens the specific Koha site config file for advanced settings or troubleshooting.
